@@ -1,0 +1,33 @@
+# Parameters
+n_policies1=1000 # number of type 1 policies
+n_policies2=1000 # number of type 2 policies
+
+b1=1 # payout for type 1 policies
+b2=2 # payout for type 2 policies
+
+q1=0.01 # probability of death for type 1 policies
+q2=0.05 # probability of death for type 2 policies
+
+#Expected payouts for each policy type
+E_X1=b1*q1
+E_X2=b2*q2
+
+#Variances for each policy type
+Var_X1=b1^2*q1*(1 - q1)
+Var_X2=b2^2*q2*(1 - q2)
+
+#Total pure premium for the portafolio
+pure_premium=n_policies1*E_X1 + n_policies2*E_X2
+
+#Total variance for the portafolio
+total_variance=n_policies1 * Var_X1 + n_policies2 * Var_X2
+total_sd=sqrt(total_variance)
+
+#CLT to find the required charge
+z_value=qnorm(0.95)
+C=pure_premium + z_value*total_sd
+C #133.2559
+#Minimum charge percentage
+charge_percentage=((C - pure_premium) / pure_premium) * 100
+charge_percentage #21.14175
+
